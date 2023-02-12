@@ -57,9 +57,9 @@ router.delete('/:_id', (req, res) => {
         })
 });
 
-router.put('/:companyName', (req, res) => {
+router.put('/', (req, res) => {
     Company.updateOne(
-        { companyName: req.params.companyName },
+        { companyName: req.body.companyName },
         { $set: req.body }
     ).then(datas => {
         if (datas) {

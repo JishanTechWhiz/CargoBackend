@@ -73,9 +73,9 @@ router.delete('/:_id', (req, res) => {
         })
 });
 
-router.put('/:Username', (req, res) => {
+router.put('/', (req, res) => {
     Agent.updateOne(
-        { Username: req.params.Username },
+        { Username: req.body.Username },
         { $set: req.body }
     ).then(datas => {
         if (datas) {
