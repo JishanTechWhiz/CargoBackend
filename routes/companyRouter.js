@@ -26,15 +26,15 @@ router.post('/addCompany', async (req, res) => {
     if (await companyExists(req.body.companyName)) {
         res.status(409).json({ error: 'Cargo alreaday exists' })
     }
-    else{
+    else {
         const companyForm = new Company({
-            companyName:req.body.companyName,
-            Email:req.body.Email,
-            GSTNo:req.body.GSTNo,
-            phoneNumber:req.body.phoneNumber,
-            State:req.body.State,
-            stateCode:req.body.stateCode,
-            Address:req.body.Address
+            companyName: req.body.companyName,
+            Email: req.body.Email,
+            GSTNo: req.body.GSTNo,
+            phoneNumber: req.body.phoneNumber,
+            State: req.body.State,
+            stateCode: req.body.stateCode,
+            Address: req.body.Address
         });
         try {
             companyForm.save(companyForm)
@@ -46,6 +46,32 @@ router.post('/addCompany', async (req, res) => {
             res.send('Error:' + err);
         }
     }
+});
+router.delete('/:_id', (req, res) => {
+    Company.findByIdAndRemove(req.params._id)
+        .then(res => {
+            res.json({ msg: 'Company Deleted' })
+        })
+        .catch(err => {
+            res.json(err)
+        })
+});
+
+router.put('/:companyName', (req, res) => {
+    Company.updateOne(
+        { companyName: req.params.companyName },
+        { $set: req.body }
+    ).then(datas => {
+        if (datas) {
+            res.status(200).json(datas)
+        }
+        else {
+            res.status(401).json({ error: 'Company not exists' })
+        }
+    }).catch(err => {
+        res.status(500).json({ error: err.message })
+    })
+
 });
 
 const companyExists = async (companyName) => {

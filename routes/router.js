@@ -3,87 +3,105 @@ const router = express.Router();
 const mongodb = require('mongodb');
 const Data = require('../model/model');
 
-router.get('/',async(req,res) => {
+router.get('/', async (req, res) => {
     //res.send('Get Req');
-    try{
-         const datas = await Data.find();
-         res.json(datas);
-    }catch(err){
-        res.send('Error:'+err);
+    try {
+        const datas = await Data.find();
+        res.json(datas);
+    } catch (err) {
+        res.send('Error:' + err);
     }
 });
 
-router.get('/:_id',async (req,res)=>{
-    try{
+router.get('/:_id', async (req, res) => {
+    try {
         const dataid = await Data.findById(req.params._id);
         res.json(dataid);
     }
-    catch(err){
-        res.send('Error:'+err);
+    catch (err) {
+        res.send('Error:' + err);
     }
 });
 
-router.post('/register',async (req,res) =>{
-    if(await userExists(req.body.Email)){
-        res.status(409).json({error:'Email alreaday exists'})
+router.post('/register', async (req, res) => {
+    if (await userExists(req.body.Email)) {
+        res.status(409).json({ error: 'Email alreaday exists' })
     }
-    else{
+    else {
         const dataForm = new Data({
-            Fullname:req.body.Fullname,
-            Phone:req.body.Phone,
-            Email:req.body.Email,
-            Password:req.body.Password,
-            ConfirmPassword:req.body.ConfirmPassword
+            Fullname: req.body.Fullname,
+            Phone: req.body.Phone,
+            Email: req.body.Email,
+            Password: req.body.Password,
+            ConfirmPassword: req.body.ConfirmPassword
         });
-        try{
-            if(req.body.Password==req.body.ConfirmPassword){
+        try {
+            if (req.body.Password == req.body.ConfirmPassword) {
                 dataForm.save(dataForm)
-                .then(data =>{
-                    res.send(data);
-                })
-             }
-             else{
-                res.status(401).json({error:'Password must be same'})
-             }
+                    .then(data => {
+                        res.send(data);
+                    })
+            }
+            else {
+                res.status(401).json({ error: 'Password must be same' })
+            }
 
         }
-        catch(err){
-            res.send('Error:'+err);
+        catch (err) {
+            res.send('Error:' + err);
         }
     }
 });
 
-router.post('/login',(req,res)=>{
-    Data.findOne({Email:req.body.Email, Password:req.body.Password}).then(datas=>{
-        if(datas){
+router.post('/login', (req, res) => {
+    Data.findOne({ Email: req.body.Email, Password: req.body.Password }).then(datas => {
+        if (datas) {
             res.status(200).json(datas)
         }
-        else{
-            res.status(401).json({error:'Incorrect email or password'})
+        else {
+            res.status(401).json({ error: 'Incorrect email or password' })
         }
-    }).catch(err=>{
-        res.status(500).json({error:err.message})
+    }).catch(err => {
+        res.status(500).json({ error: err.message })
     })
 });
 
 router.delete('/:_id', (req, res) => {
     Data.findByIdAndRemove(req.params._id)
-    .then(res =>{
-        res.json({msg:'User Deleted'})
-    })
-    .catch(err => {
-        res.json(err)
-    })
-});
-const userExists = async(Email)=>{
-    const datas = await Data.findOne({Email:Email}) 
+        .then(res => {
 
-    if(datas){
+            res.json({ msg: 'User Deleted' })
+        })
+        .catch(err => {
+            res.json(err)
+        })
+});
+
+router.put('/', (req, res) => {
+        Data.updateOne(
+            { Fullname: req.body.Fullname },
+            { $set: req.body }
+        ).then(datas => {
+            if (datas) {
+                res.status(200).json(datas)
+            }
+            else {
+                res.status(401).json({ error: 'User not exists' })
+            }
+        }).catch(err => {
+            res.status(500).json({ error: err.message })
+        })
+});
+const userExists = async (Email) => {
+    const datas = await Data.findOne({ Email: Email })
+
+    if (datas) {
         return true
     }
-    else{
+    else {
         return false
     }
 }
+
 
 module.exports = router;

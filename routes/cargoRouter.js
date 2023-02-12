@@ -23,39 +23,48 @@ router.get('/:_id', async (req, res) => {
 });
 
 router.post('/cargoDetails', async (req, res) => {
-        const cargoForm = new Cargo({
-            invoiceNo: req.body.invoiceNo,
-            Date: req.body.Date,
-            From: req.body.From,
-            To: req.body.To,
-            noOfArticles: req.body.noOfArticles,
-            packingMode: req.body.packingMode,
-            Description: req.body.Description,
-            actualWeight:req.body.actualWeight,
-            doubleWeight:req.body.doubleWeight,
-            chargeWeight:req.body.chargeWeight,
-            ewayBillNo:req.body.ewayBillNo,
-            Rate:req.body.Rate,
-            Freight:req.body.Freight,
-            Handling:req.body.Handling,
-            gatePass:req.body.gatePass,
-            doorDelivery:req.body.doorDelivery,
-            CGST:req.body.CGST,
-            SGST:req.body.SGST,
-            IGST:req.body.IGST,
-            grandTotal:req.body.grandTotal,
-            Value:req.body.Value,
-            paymentMode:req.body.paymentMode,
-        });
-        try {
-            cargoForm.save(cargoForm)
-                .then(cargo => {
-                    res.send(cargo);
-                })
-        }
-        catch (err) {
-            res.send('Error:' + err);
-        }
+    const cargoForm = new Cargo({
+        invoiceNo: req.body.invoiceNo,
+        Date: req.body.Date,
+        From: req.body.From,
+        To: req.body.To,
+        noOfArticles: req.body.noOfArticles,
+        packingMode: req.body.packingMode,
+        Description: req.body.Description,
+        actualWeight: req.body.actualWeight,
+        doubleWeight: req.body.doubleWeight,
+        chargeWeight: req.body.chargeWeight,
+        ewayBillNo: req.body.ewayBillNo,
+        Rate: req.body.Rate,
+        Freight: req.body.Freight,
+        Handling: req.body.Handling,
+        gatePass: req.body.gatePass,
+        doorDelivery: req.body.doorDelivery,
+        CGST: req.body.CGST,
+        SGST: req.body.SGST,
+        IGST: req.body.IGST,
+        grandTotal: req.body.grandTotal,
+        Value: req.body.Value,
+        paymentMode: req.body.paymentMode,
+    });
+    try {
+        cargoForm.save(cargoForm)
+            .then(cargo => {
+                res.send(cargo);
+            })
+    }
+    catch (err) {
+        res.send('Error:' + err);
+    }
+});
+router.delete('/:_id', (req, res) => {
+    Cargo.findByIdAndRemove(req.params._id)
+        .then(res => {
+            res.json({ msg: 'Cargo Deleted' })
+        })
+        .catch(err => {
+            res.json(err)
+        })
 });
 
 

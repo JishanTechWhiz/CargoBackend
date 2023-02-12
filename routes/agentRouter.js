@@ -51,27 +51,54 @@ router.post('/addAgent', async (req, res) => {
     }
 });
 router.post('/agentLogin', (req, res) => {
-    Agent.findOne({Username:req.body.Username, Password:req.body.Password}).then(datas=>{
-        if(datas){
+    Agent.findOne({ Username: req.body.Username, Password: req.body.Password }).then(datas => {
+        if (datas) {
             res.status(200).json(datas)
-            
+
         }
-        else{
-            res.status(401).json({error:'Incorrect Username or password'})
+        else {
+            res.status(401).json({ error: 'Incorrect Username or password' })
         }
-    }).catch(err=>{
-        res.status(500).json({error:err.message})
+    }).catch(err => {
+        res.status(500).json({ error: err.message })
     })
+});
+router.delete('/:_id', (req, res) => {
+    Agent.findByIdAndRemove(req.params._id)
+        .then(res => {
+            res.json({ msg: 'Agent Deleted' })
+        })
+        .catch(err => {
+            res.json(err)
+        })
+});
+
+router.put('/:Username', (req, res) => {
+    Agent.updateOne(
+        { Username: req.params.Username },
+        { $set: req.body }
+    ).then(datas => {
+        if (datas) {
+            res.status(200).json(datas)
+        }
+        else {
+            res.status(401).json({ error: 'Agent not exists' })
+        }
+    }).catch(err => {
+        res.status(500).json({ error: err.message })
+    })
+
 });
 
 const agentExists = async (Username) => {
-        const agents = await Agent.findOne({ Username: Username })
+    const agents = await Agent.findOne({ Username: Username })
 
-        if (agents) {
-            return true
-        }
-        else {
-            return false
-        }
+    if (agents) {
+        return true
+    }
+    else {
+        return false
+    }
 }
-    module.exports = router;
+
+module.exports = router;
