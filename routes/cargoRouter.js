@@ -24,6 +24,8 @@ router.get('/:_id', async (req, res) => {
 
 router.post('/cargoDetails', async (req, res) => {
     const cargoForm = new Cargo({
+        senderCompany:req.body.senderCompany,
+        receiverCompany:req.body.receiverCompany,
         invoiceNo: req.body.invoiceNo,
         Date: req.body.Date,
         From: req.body.From,
