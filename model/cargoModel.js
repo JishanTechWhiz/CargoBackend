@@ -1,8 +1,14 @@
 const mongoose = require("mongoose");
 
 var cargoSchema  = new mongoose.Schema({
+    senderCompany:{
+        type:String
+    },
+    receiverCompany:{
+        type:String
+    },
     invoiceNo:{
-        type:String,
+        type:String
     },
     Date:{
         type:Date,
