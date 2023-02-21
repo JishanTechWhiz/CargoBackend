@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const mongodb = require('mongodb');
 const Data = require('../model/model');
 
 router.get('/', async (req, res) => {
@@ -69,7 +68,6 @@ router.post('/login', (req, res) => {
 router.delete('/:_id', (req, res) => {
     Data.findByIdAndRemove(req.params._id)
         .then(res => {
-
             res.json({ msg: 'User Deleted' })
         })
         .catch(err => {

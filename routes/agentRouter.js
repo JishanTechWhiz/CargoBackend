@@ -12,6 +12,22 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get('/', async (req, res) => {
+    //res.send('Get Req');
+    Agent.find(
+        { Username: req.body.Username },
+    ).then(datas => {
+        if (datas) {
+            res.status(200).json(datas)
+        }
+        else {
+            res.status(401).json({ error: 'Agent not exists' })
+        }
+    }).catch(err => {
+        res.status(500).json({ error: err.message })
+    })
+});
+
 router.get('/:_id', async (req, res) => {
     try {
         const agentId = await Agent.findById(req.params._id);
