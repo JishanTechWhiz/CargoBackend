@@ -90,7 +90,7 @@ router.delete('/:_id', (req, res) => {
 });
 
 router.put('/', (req, res) => {
-    Agent.updateOne(
+    Agent.findOneAndUpdate(
         { Username: req.body.Username },
         { $set: req.body }
     ).then(datas => {
