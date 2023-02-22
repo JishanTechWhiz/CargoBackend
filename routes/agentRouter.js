@@ -12,9 +12,9 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/', async (req, res) => {
+router.post('/', async (req, res) => {
     //res.send('Get Req');
-    Agent.find(
+    Agent.findOne(
         { Username: req.body.Username },
     ).then(datas => {
         if (datas) {
