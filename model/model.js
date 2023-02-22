@@ -20,6 +20,12 @@ var userSchema  = new mongoose.Schema({
     ConfirmPassword:{
         type:String,
         required:[true, 'Please Enter Password.']
+    },
+    Gender:{
+        type:String
+    },
+    DOB:{
+        type:Date
     }
 });
 
