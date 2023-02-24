@@ -89,9 +89,9 @@ router.delete('/:_id', (req, res) => {
         })
 });
 
-router.put('/:_id', (req, res) => {
-    Agent.findByIdAndUpdate(
-        { id : req.params._id },
+router.put('/', (req, res) => {
+    Agent.findOneAndUpdate(
+        { Username: req.body.Username },
         { $set: req.body }
     ).then(datas => {
         if (datas) {
