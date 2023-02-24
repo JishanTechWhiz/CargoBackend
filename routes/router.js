@@ -75,9 +75,9 @@ router.delete('/:_id', (req, res) => {
         })
 });
 
-router.put('/', (req, res) => {
-        Data.findOneAndUpdate(
-            { Fullname: req.body.Fullname },
+router.put('/:_id', (req, res) => {
+        Data.findByIdAndUpdate(
+            { id : req.params._id  },
             { $set: req.body }
         ).then(datas => {
             if (datas) {
