@@ -60,9 +60,9 @@ router.post('/cargoDetails', async (req, res) => {
     }
 });
 
-router.put('/:_id', (req, res) => {
-    Cargo.findByIdAndUpdate(
-        { _id: req.params._id },
+router.put('/', (req, res) => {
+    Cargo.findOneAndUpdate(
+        { _id: req.body._id },
         { $set: req.body }
     ).then(datas => {
         if (datas) {
