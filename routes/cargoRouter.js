@@ -59,6 +59,23 @@ router.post('/cargoDetails', async (req, res) => {
         res.send('Error:' + err);
     }
 });
+
+router.put('/:_id', (req, res) => {
+    Cargo.findByIdAndUpdate(
+        { _id: req.params._id },
+        { $set: req.body }
+    ).then(datas => {
+        if (datas) {
+            res.status(200).json(datas)
+        }
+        else {
+            res.status(401).json({ error: 'Cargo not exists' })
+        }
+    }).catch(err => {
+        res.status(500).json({ error: err.message })
+    })
+});
+
 router.delete('/:_id', (req, res) => {
     Cargo.findByIdAndRemove(req.params._id)
         .then(res => {

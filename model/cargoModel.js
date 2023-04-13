@@ -73,6 +73,12 @@ var cargoSchema  = new mongoose.Schema({
     },
     paymentMode:{
         type:String
+    },
+    cargoType:{
+        type:String
+    },
+    Status:{
+        type:String
     }
 });
 
