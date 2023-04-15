@@ -30,6 +30,7 @@ router.post('/cargoDetails', async (req, res) => {
         Date: req.body.Date,
         From: req.body.From,
         To: req.body.To,
+        Email:req.body.Email,
         noOfArticles: req.body.noOfArticles,
         packingMode: req.body.packingMode,
         Description: req.body.Description,
@@ -48,6 +49,8 @@ router.post('/cargoDetails', async (req, res) => {
         grandTotal: req.body.grandTotal,
         Value: req.body.Value,
         paymentMode: req.body.paymentMode,
+        cargoType:req.body.cargoType,
+        Status:req.body.Status
     });
     try {
         cargoForm.save(cargoForm)

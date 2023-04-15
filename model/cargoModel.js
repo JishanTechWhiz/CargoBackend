@@ -20,6 +20,9 @@ var cargoSchema  = new mongoose.Schema({
     To:{
         type:String
     },
+    Email:{
+        type:String
+    },
     noOfArticles:{
         type:String
     },
