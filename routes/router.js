@@ -3,7 +3,6 @@ const router = express.Router();
 const Data = require('../model/model');
 
 router.get('/', async (req, res) => {
-    //res.send('Get Req');
     try {
         const datas = await Data.find();
         res.json(datas);
@@ -21,6 +20,7 @@ router.get('/:_id', async (req, res) => {
         res.send('Error:' + err);
     }
 });
+
 
 router.post('/register', async (req, res) => {
     if (await userExists(req.body.Email)) {

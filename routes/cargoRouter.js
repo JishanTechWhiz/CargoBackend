@@ -31,6 +31,7 @@ router.post('/cargoDetails', async (req, res) => {
         From: req.body.From,
         To: req.body.To,
         Email:req.body.Email,
+        trainNo:req.body.trainNo,
         noOfArticles: req.body.noOfArticles,
         packingMode: req.body.packingMode,
         Description: req.body.Description,
